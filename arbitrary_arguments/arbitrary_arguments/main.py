@@ -1,18 +1,13 @@
-def calculate_total(*prices):
-    if len(prices)==0:
-        return "Your cart is empty."
+def generate_report(*scores, **kwargs):
+    label = kwargs.get("label", "Report")
+    avg = sum(scores)/len(scores)
+    if "passing_score" in kwargs:
+        status = "Status: Pass" if avg >= kwargs["passing_score"] else "Status: Fail"
+        return f"{label} | Average: {avg:.2f} | {status}"
 
-    total = sum(prices)
-
-    if total >= 200:
-        total *= .80  # 20% discount
-    elif total>=100:
-        total *= .90  # 10% discount
-
-    return f"Final total: ${total:.2f}"
+    return f"{label} | Average: {avg:.2f}"
 
 # Testing the result
-print(calculate_total(30, 20, 50))
-print(calculate_total(100, 50, 80))
-print(calculate_total(150, 100))
-print(calculate_total())
+print(generate_report(80, 90, 70, label="Math", passing_score=75))
+print(generate_report(50, 60, 40, passing_score=65))
+print(generate_report(95, 88, 92, label="Science"))
